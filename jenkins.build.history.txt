@@ -1,0 +1,260 @@
+    1  25/10/17 02:21:12 ls
+    2  25/10/17 02:21:26 HISTTIMEFORMAT="%d/%m/%y %T "
+    3  25/10/17 02:21:30 ls
+    4  25/10/17 02:21:31 history
+    5  25/10/17 02:21:42 vim .bashrc 
+    6  25/10/17 02:21:52 nano .bashrc 
+    7  25/10/17 02:22:13 source .bashrc 
+    8  25/10/17 02:22:21 sudo apt-get install -y vim
+    9  25/10/17 02:22:40 history
+   10  25/10/17 02:23:48 echo "Getting docker..."
+   11  25/10/17 02:23:50 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+   12  25/10/17 02:24:02 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+   13  25/10/17 02:24:09 sudo apt-get update
+   14  25/10/17 02:24:16 apt-cache policy docker-ce
+   15  25/10/17 02:24:31 sudo apt-get install -y docker-ce
+   16  25/10/17 02:24:52 history
+   17  25/10/17 02:24:54 ls
+   18  25/10/17 02:25:15 ls -Al
+   19  25/10/17 02:25:23 tail .bash_history 
+   20  25/10/17 02:27:15 cat .sudo_as_admin_successful 
+   21  25/10/17 02:27:24 sudo apt-get install -y docker-ce
+   22  25/10/17 02:27:37 sudo systemctl status docker
+   23  25/10/17 02:27:42 service
+   24  25/10/17 02:27:48 service --status-all
+   25  25/10/17 02:27:59 sudo systemctl status docker
+   26  25/10/17 02:28:06 docker
+   27  25/10/17 02:28:07 docker ps
+   28  25/10/17 02:28:20 sudo usermod -aG docker ubuntu
+   29  25/10/17 02:28:22 docker ps
+   30  25/10/17 02:28:30 exit
+   31  25/10/17 02:28:33 docker ps
+   32  25/10/17 02:28:57 java -version
+   33  25/10/17 02:29:15 sudo add-apt-repository ppa:webupd8team/java
+   34  25/10/17 02:29:32 sudo apt update; sudo apt install oracle-java8-installer
+   35  25/10/17 02:32:04 java -version
+   36  25/10/17 02:32:14 wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+   37  25/10/17 02:32:20 echo deb http://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list
+   38  25/10/17 02:32:26 sudo apt-get update
+   39  25/10/17 02:32:32 sudo apt-get install jenkins
+   40  25/10/17 02:32:55 ls
+   41  25/10/17 02:32:57 history
+   42  25/10/17 02:33:06 ls
+   43  25/10/17 02:33:19 sudo systemctl start jenkins
+   44  25/10/17 02:33:26 sudo systemctl status jenkins
+   45  25/10/17 02:33:31 sudo systemctl
+   46  25/10/17 02:33:39 sudo systemctl --help
+   47  25/10/17 02:34:11 sudo apt-get install -y openssl
+   48  25/10/17 02:34:15 sudo apt-get install -y nginx
+   49  25/10/17 02:34:43 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+   50  25/10/17 02:35:20 sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+   51  25/10/17 02:36:53 ls
+   52  25/10/17 02:36:58 cd /etc/nginx/
+   53  25/10/17 02:36:59 ls
+   54  25/10/17 02:37:02 cd snippets/
+   55  25/10/17 02:37:02 ls
+   56  25/10/17 02:37:14 vim self-signed.conf
+   57  25/10/17 02:37:26 sudo vim self-signed.conf
+   58  25/10/17 02:37:47 vim ssl-params.conf
+   59  25/10/17 02:37:56 sudo vim ssl-params.conf
+   60  25/10/17 02:38:18 cd ..
+   61  25/10/17 02:38:21 cd sites-available/
+   62  25/10/17 02:38:24 sudo vim default 
+   63  25/10/17 02:43:25 ls
+   64  25/10/17 02:43:26 ls ..
+   65  25/10/17 02:43:29 sudo vim default 
+   66  25/10/17 02:44:15 sudo nginx -t
+   67  25/10/17 02:44:22 systemctl nginx restart
+   68  25/10/17 02:44:30 systemctl restart nginx
+   69  25/10/17 02:44:53 sudo systemctl nginx restart
+   70  25/10/17 02:45:02 sudo systemctl restart ngnix
+   71  25/10/17 02:45:10 sudo systemctl restart nginx
+   72  25/10/17 02:45:31 curl localhost:8080
+   73  25/10/17 02:45:35 ls
+   74  25/10/17 02:45:37 sudo vim default 
+   75  25/10/17 02:46:09 sudo nginx -t
+   76  25/10/17 02:46:16 sudo systemctl restart nginx
+   77  25/10/17 02:46:32 curl localhost:8080
+   78  25/10/17 02:46:37 curl localhost:80
+   79  25/10/17 02:46:39 curl localhost:433
+   80  25/10/17 02:46:45 curl https://localhost
+   81  25/10/17 02:47:11 sudo vim default 
+   82  25/10/17 02:48:12 sudo nginx -t
+   83  25/10/17 02:48:21 sudo vim default 
+   84  25/10/17 02:48:34 sudo nginx -t
+   85  25/10/17 02:48:45 ls ../snippets/
+   86  25/10/17 02:48:49 sudo vim default 
+   87  25/10/17 02:49:00 sudo nginx -t
+   88  25/10/17 02:49:09 sudo systemctl restart nginx
+   89  25/10/17 02:49:30 cd ..
+   90  25/10/17 02:49:32 ls
+   91  25/10/17 02:49:51 cd default/
+   92  25/10/17 02:49:51 ls
+   93  25/10/17 02:49:54 sudo vim jenkins 
+   94  25/10/17 02:50:36 sudo usermod -aG docker jenkins
+   95  25/10/17 02:50:57 sudo vim jenkins 
+   96  25/10/17 02:51:23 cd /var/cache/
+   97  25/10/17 02:51:24 ls
+   98  25/10/17 02:51:26 mount
+   99  25/10/17 02:51:35 ls
+  100  25/10/17 02:51:38 cd jenkins/
+  101  25/10/17 02:51:38 ls
+  102  25/10/17 02:51:42 ls -Al
+  103  25/10/17 03:11:59 env
+  104  25/10/17 03:12:07 sudo su jenkins
+  105  25/10/17 03:13:18 exit
+  106  25/10/17 03:17:11 ls
+  107  25/10/17 03:17:12 mount
+  108  25/10/17 03:17:21 mount | grep vfb
+  109  25/10/17 03:17:23 mount | grep vdb
+  110  25/10/17 03:17:24 mount | grep vda
+  111  25/10/17 03:19:18 sudo mkfs.ext4 /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8 
+  112  25/10/17 03:19:38 mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8 /var/lib/jenkins
+  113  25/10/17 03:19:53 sudo mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8 /var/lib/jenkins
+  114  25/10/17 03:20:02 sudo systemctl restart jenkins
+  115  25/10/17 03:20:34 ls
+  116  25/10/17 03:20:42 cd /var/lib
+  117  25/10/17 03:20:42 ls
+  118  25/10/17 03:20:44 ls -Al
+  119  25/10/17 03:20:56 umount /var/lib/jenkins 
+  120  25/10/17 03:21:00 sudo umount /var/lib/jenkins 
+  121  25/10/17 03:21:01 ls -Al
+  122  25/10/17 03:22:12 sudo mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8  /var/lib/jenkins -o uid=jenkins -o gid=jenkins
+  123  25/10/17 03:22:18 history
+  124  25/10/17 03:22:32 sudo mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8  /var/lib/jenkins -o uid=jenkins -o gid=jenkins
+  125  25/10/17 03:22:48 dmesg | tail
+  126  25/10/17 03:22:55 mount
+  127  25/10/17 03:22:58 mount --help
+  128  25/10/17 03:24:11 sudo mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8  /var/lib/jenkins -o uid=jenkins 
+  129  25/10/17 03:24:45 sudo vim /etc/fstab 
+  130  25/10/17 03:26:12 ls
+  131  25/10/17 03:26:28 sudo vim /etc/fstab 
+  132  25/10/17 03:27:01 man fstab
+  133  25/10/17 03:28:02 sudo vim /etc/fstab 
+  134  25/10/17 03:28:43 sudo mount -a
+  135  25/10/17 03:28:52 man fstab
+  136  25/10/17 03:29:56 man mount
+  137  25/10/17 03:33:45 sudo id -u jenkins
+  138  25/10/17 03:33:51 sudo id -G jenkins
+  139  25/10/17 03:33:56 groups jenkins
+  140  25/10/17 03:34:11 sudo vim /etc/fstab 
+  141  25/10/17 03:34:25 sudo mount -a
+  142  25/10/17 03:34:31 dmesg | tail
+  143  25/10/17 03:35:41 sudo vim /etc/fstab 
+  144  25/10/17 03:35:52 sudo mount -a
+  145  25/10/17 03:35:54 dmesg | tail
+  146  25/10/17 03:35:59 sudo vim /etc/fstab 
+  147  25/10/17 03:36:15 dmesg | tail
+  148  25/10/17 03:36:20 sudo mount -a
+  149  25/10/17 03:36:21 dmesg | tail
+  150  25/10/17 03:36:37 mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8 /var/lib/jenkins/ -o uid=110
+  151  25/10/17 03:36:47 sudo mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8 /var/lib/jenkins/ -o uid=110
+  152  25/10/17 03:36:54 sudo dmesg | tail
+  153  25/10/17 03:36:58 sudo mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8 /var/lib/jenkins/ -o uid
+  154  25/10/17 03:37:11 sudo mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8 /var/lib/jenkins/ --options="uid=110"
+  155  25/10/17 03:37:13 sudo dmesg | tail
+  156  25/10/17 03:37:19 sudo mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8 /var/lib/jenkins/ --options="uid:110"
+  157  25/10/17 03:37:21 sudo dmesg | tail
+  158  25/10/17 03:38:02 ls
+  159  25/10/17 03:38:03 ls -Al
+  160  25/10/17 03:38:11 sudo mount /dev/disk/by-id/virtio-dc57271d-c518-4dd6-8 /var/lib/jenkins/ 
+  161  25/10/17 03:38:12 ls
+  162  25/10/17 03:38:13 ls- Al
+  163  25/10/17 03:38:15 ls -Al
+  164  25/10/17 03:38:27 sudo chown jenkins:jenkins jenkins/
+  165  25/10/17 03:38:29 ls -Al
+  166  25/10/17 03:38:32 umount jenkins/
+  167  25/10/17 03:38:38 sudo umount jenkins/
+  168  25/10/17 03:38:41 ls -Al
+  169  25/10/17 03:38:47 sudo vim /etc/fstab 
+  170  25/10/17 03:38:58 sudo mount -a
+  171  25/10/17 03:39:03 dmesg | tail
+  172  25/10/17 03:39:10 sudo vim /etc/fstab 
+  173  25/10/17 03:39:18 sudo mount -a
+  174  25/10/17 03:39:23 dmesg | tail
+  175  25/10/17 03:39:24 ls
+  176  25/10/17 03:39:25 ls -Al
+  177  25/10/17 03:39:28 ls jenkins/
+  178  25/10/17 03:39:43 sudo systemctl restart jenkins
+  179  25/10/17 03:39:47 ls
+  180  25/10/17 03:39:48 cd jenkins/
+  181  25/10/17 03:39:48 ls
+  182  25/10/17 03:39:50 cat failed-boot-attempts.txt 
+  183  25/10/17 03:39:55 cd ..
+  184  25/10/17 03:39:55 ls
+  185  25/10/17 03:40:04 sudo umount jenkins
+  186  25/10/17 03:40:20 sudo systemctl stop jenkins
+  187  25/10/17 03:40:22 sudo umount jenkins
+  188  25/10/17 03:40:26 ls jenkins/
+  189  25/10/17 03:40:35 sudo apt-get remove jenkins
+  190  25/10/17 03:40:44 sudo mount -a
+  191  25/10/17 03:40:46 mount
+  192  25/10/17 03:40:55 sudo apt-get install -y jenkins
+  193  25/10/17 03:41:04 ls
+  194  25/10/17 03:41:06 ls jenkins/
+  195  25/10/17 03:41:23 cd jenkins/
+  196  25/10/17 03:41:24 cd secrets/
+  197  25/10/17 03:41:25 ls
+  198  25/10/17 03:41:27 cat initialAdminPassword 
+  199  25/10/17 03:41:31 sudo cat initialAdminPassword 
+  200  25/10/17 03:45:25 cd ..
+  201  25/10/17 03:45:25 ls
+  202  25/10/17 03:45:30 cd workspace
+  203  25/10/17 03:45:35 ls -Al
+  204  25/10/17 03:45:42 ls /dev
+  205  25/10/17 03:47:30 cd
+  206  25/10/17 03:47:30 ls
+  207  25/10/17 03:47:33 docker ps
+  208  25/10/17 03:49:46 docker
+  209  25/10/17 03:49:51 dockerinfo
+  210  25/10/17 03:49:56 docker info
+  211  25/10/17 03:50:03 curl localhost:8000
+  212  25/10/17 03:50:27 curl 115.146.92.40:8000
+  213  25/10/17 03:50:36 curl https://localhost:8000
+  214  25/10/17 03:50:40 docker ps
+  215  25/10/17 03:51:02 docker exec -it blahappdeployed /bin/bash
+  216  25/10/17 03:51:21 curl localhost:33000
+  217  25/10/17 03:51:24 exit
+  218  25/10/17 06:39:13 history
+  219  25/10/17 06:43:16 exit
+  220  26/10/17 00:32:04 mount
+  221  26/10/17 00:32:07 mount | grep jenkins
+  222  26/10/17 00:32:11 cd /var/lib/jenkins/
+  223  26/10/17 00:32:11 ls
+  224  26/10/17 00:32:14 cd secrets/
+  225  26/10/17 00:32:14 ls
+  226  26/10/17 00:32:16 less initialAdminPassword 
+  227  26/10/17 00:32:19 sudo cat initialAdminPassword 
+  228  26/10/17 00:32:35 exit
+  229  26/10/17 00:32:50 ls
+  230  26/10/17 00:32:52 docker
+  231  26/10/17 00:32:53 docker ps
+  232  26/10/17 00:32:56 docker ps -a
+  233  26/10/17 00:33:03 docker ps
+  234  26/10/17 00:33:07 docker images
+  235  26/10/17 00:33:21 docker run --d 78beacf2fc0237851c84d642e8afe0cdf0a6ef5e
+  236  26/10/17 00:33:30 docker run 
+  237  26/10/17 00:33:37 docker run -d 78beacf2fc0237851c84d642e8afe0cdf0a6ef5e
+  238  26/10/17 00:33:39 docker ps
+  239  26/10/17 00:33:50 docker exec -it vigilant_goldwasser /bin/bash
+  240  26/10/17 00:33:58 docker ps
+  241  26/10/17 00:34:01 docker stop vigilant_goldwasser
+  242  26/10/17 00:34:11 docker rm vigilant_goldwasser
+  243  26/10/17 00:38:14 ls
+  244  26/10/17 00:38:15 docker ps
+  245  26/10/17 00:38:17 docker images
+  246  26/10/17 00:38:35 docker run -d -P alan/blahapp
+  247  26/10/17 00:38:37 docker ps
+  248  26/10/17 00:38:48 curl localhost:32768
+  249  26/10/17 00:38:50 ls
+  250  26/10/17 00:38:54 docker ps
+  251  26/10/17 00:39:00 docker stop angry_wescoff
+  252  26/10/17 00:39:10 docker rm angry_wescoff
+  253  26/10/17 00:39:15 ls
+  254  26/10/17 00:39:19 exit
+  255  26/10/17 00:45:20 docker ps
+  256  26/10/17 00:45:26 curl localhost:33000
+  257  26/10/17 00:45:31 exit
+  258  26/10/17 03:24:54 history
+  259  26/10/17 03:24:58 less .bash_history 
+  260  26/10/17 03:25:18 history > jenkins.build.history.txt
