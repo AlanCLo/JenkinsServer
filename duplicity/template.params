@@ -1,0 +1,13 @@
+export PRODUCTION_HOST=
+export PRODUCTION_PORT=
+export PRODUCTION_USER=
+export PRODUCTION_PASSWORD=
+export PRODUCTION_DB=
+
+export TEST_HOST=
+export TEST_PORT=
+export TEST_USER=
+export TEST_PASSWORD=
+export TEST_DB=
+
+export BACKUP_FILE=

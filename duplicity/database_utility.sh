@@ -2,20 +2,22 @@
 #
 # Helper and Utility functions for database backup and restoration for testing with PostgreSQL.
 
+# List of required environment variables for this utility
+_database_params=($(cat <<EOF
+PRODUCTION_HOST
+PRODUCTION_PORT
+PRODUCTION_USER
+PRODUCTION_PASSWORD
+PRODUCTION_DB
+TEST_HOST
+TEST_PORT
+TEST_USER
+TEST_PASSWORD
+TEST_DB
+BACKUP_FILE
+EOF
+))
 
-export PRODUCTION_HOST=postgres
-export PRODUCTION_PORT=5432
-export PRODUCTION_USER=postgres
-export PRODUCTION_PASSWORD=admin123
-export PRODUCTION_DB=blahapp
-
-export TEST_HOST=localhost
-export TEST_PORT=5432
-export TEST_USER=postgres
-export TEST_PASSWORD=admin123
-export TEST_DB=devblah
-
-export BACKUP_FILE=data/database.sqlc
 
 # =====
 # Helper functions
@@ -237,3 +239,42 @@ database_restore_to_test() {
 	_database_unset
 }
 
+
+#####
+# Utility to let you know if all the environment variables have been set
+# Arguments:
+#    None
+# Return:
+#    0 if successful, 1 if anything is missing
+#####
+database_config_test() {
+	is_valid=true
+	for var in "${_database_params[@]}"; do
+		if [ -z ${!var} ]; then
+			_err "Missing environment variable $var"
+			is_valid=false
+		fi
+	done
+
+	if $is_valid; then
+		_info "SUCCESS. All environment variables are set"
+		return 0
+	else
+		return 1
+	fi
+}
+
+
+
+#####
+# Utility to unset all the environment variables so that in a script you can ensure nothing is left in memory at the end
+# Arguments:
+#    None
+# Return:
+#    None
+#####
+database_param_clear() {
+	for var in "${_database_params[@]}"; do
+		unset $var
+	done
+}
