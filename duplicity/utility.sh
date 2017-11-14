@@ -1,6 +1,9 @@
 #!/bin/bash
 #
 # Helper and Utility functions for database backup and restoration for testing with PostgreSQL.
+#
+# Designed for you to source this file so that you can have all the functions to debug with
+#
 
 # List of required environment variables for this utility
 _database_params=($(cat <<EOF
