@@ -1,8 +1,14 @@
 #!/bin/bash
 #
-# Helper and Utility functions for database backup and restoration for testing with PostgreSQL.
+# Helper and Utility functions for database backup and restoration.
+# Based on:
+#	- PostgreSQL databases
+#	- gnupg2 encryption & signing
+#	- Duplicity
+#	- OpenStack SWIFT
 #
-# Designed for you to source this file so that you can have all the functions to debug with
+# Assume configuration paramters are in the environment by souring a profile for a given project.
+# Designed for you to source this file so that you can have include in scripts or to get all the functions to setup, test and debug with on commandline
 #
 
 # List of required environment variables for this utility
@@ -130,7 +136,7 @@ _database_drop() {
 
 
 # =====
-# Utility functions
+# Database utility functions
 # =====
 
 #####
