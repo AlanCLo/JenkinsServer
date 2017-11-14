@@ -147,6 +147,29 @@ database_list() {
 	_database_unset
 }
 
+#####
+# Test the connectivity to a database with a SELECT 1; statement
+# Arguments:
+#    None
+# Return:
+#    Exit code of psql
+#####
+database_test_connectivity() {
+	if [ -z "$1" ] || [ -z "$2" ]; then
+		echo "Usage: database_test_connectivity (prod|test) (db name)"
+		return
+	fi
+	_database_set_profile $1
+	psql -h $DB_HOST -p $DB_PORT -U $DB_USER -c "SELECT 1;"
+	RESULT=$?
+	if [ "$RESULT" -eq 0 ]; then
+		_info "SUCCESS"
+	else
+		_err "Fail to connect"
+	fi
+	_database_unset
+	return $RESULT
+}
 
 
 #####
@@ -265,7 +288,6 @@ database_config_test() {
 }
 
 
-
 #####
 # Utility to unset all the environment variables so that in a script you can ensure nothing is left in memory at the end
 # Arguments:
@@ -278,3 +300,6 @@ database_param_clear() {
 		unset $var
 	done
 }
+
+
+
