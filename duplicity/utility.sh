@@ -12,7 +12,8 @@
 #
 
 # List of required environment variables for this utility
-_database_params=($(cat <<EOF
+_backup_params=($(cat <<EOF
+SCRIPT_HOME
 PRODUCTION_HOST
 PRODUCTION_PORT
 PRODUCTION_USER
@@ -24,6 +25,15 @@ TEST_USER
 TEST_PASSWORD
 TEST_DB
 BACKUP_FILE
+DEST_PREFIX
+RESTORE_DEFAULT_LOCATION
+ENCRYPT_KEY
+ENCRYPT_SIG
+ENCRYPT_PASSWORD
+SWIFT_USERNAME
+SWIFT_PASSWORD
+SWIFT_AUTHURL
+SWIFT_AUTHVERSION
 EOF
 ))
 
@@ -279,9 +289,9 @@ database_restore_to_test() {
 # Return:
 #    0 if successful, 1 if anything is missing
 #####
-database_config_test() {
+config_test() {
 	is_valid=true
-	for var in "${_database_params[@]}"; do
+	for var in "${_backup_params[@]}"; do
 		if [ -z ${!var} ]; then
 			_err "Missing environment variable $var"
 			is_valid=false
@@ -289,7 +299,7 @@ database_config_test() {
 	done
 
 	if $is_valid; then
-		_info "SUCCESS. All environment variables are set"
+		_info "Check complete. All variables are set"
 		return 0
 	else
 		return 1
@@ -304,8 +314,8 @@ database_config_test() {
 # Return:
 #    None
 #####
-database_param_clear() {
-	for var in "${_database_params[@]}"; do
+config_clear() {
+	for var in "${_backup_params[@]}"; do
 		unset $var
 	done
 }
