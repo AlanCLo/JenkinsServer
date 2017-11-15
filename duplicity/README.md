@@ -2,7 +2,10 @@
 
 Sub-system featuring rolling-window full backup to SWIFT and supporting copy-of-prod test databases for database applications. Every application you wish to apply this to requires its own **params** file, and associated lines in crontab.
 
-The main idea is there is a production database for your application that you wish to backup with a rolling window policy of daily, weekly and monthly backups. For testing, another test database is needed and is always a copy of production based on the last backup.
+The main idea is there is that you have:
+ 1. A production database for your application that you wish to backup with a rolling window policy of daily, weekly and monthly backups.
+ 2. For testing, another test database is needed and is always a copy of production based on the last backup.
+
 
 Example: 
 "blahapp" is a django app, all required connection details and backup policy is stored in /workspace/blahapp.params
@@ -37,6 +40,7 @@ Currently supports:
 4. Setup cron to run once per day at preferred time for swift_backup.bash and update_test_db_from_backup.bash as per example above
 
 **Note**: It is fine to run the scripts manually outside of cron to do a backup or restore to test.
+See How To's below for practical things to do to get this going.
 
 ## How To's ##
 
@@ -101,7 +105,11 @@ database_test_connectivity (prod|test) (db name)
 database_backup (prod|test) (db name) (file)
 database_backup_production
 database_restore_to_test
+config_test
 ```
+
+When you are getting a new setup and application going, you should be able to run each of these functions on their own. Of course you should run the swift\_backup.bash and update\_test\_db\_from_backup.bash manually before setting up cron
+
 
 
 
