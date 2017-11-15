@@ -13,7 +13,6 @@ if [ -z "$1" ]; then
 fi
 . $1
 
-# Check for database parameters first
 . "$SCRIPT_HOME/utility.sh"
 if ! config_test; then
 	exit 1
@@ -26,6 +25,7 @@ _do_upload() {
 	_info "Backup to $3"
 	duplicity full \
 		--verbosity notice \
+		--gpg-options "--batch --pinentry-mode=loopback" \
 		--encrypt-key "$1" \
 		--num-retries 3 \
 		--asynchronous-upload \
@@ -44,7 +44,7 @@ DEST_WEEKLY="$DEST_PREFIX-weekly"
 DEST_MONTHLY="$DEST_PREFIX-monthly"
 
 
-PASSPHRASE=$ENCRYPT_PASSWORD
+export PASSPHRASE=$ENCRYPT_PASSWORD
 
 # === Uploads ===
 _do_upload "$ENCRYPT_SIG" "$BACKUP_FILE" "$DEST_DAILY"

@@ -240,6 +240,15 @@ database_backup_production() {
 #    None
 #####
 database_restore_to_test() {
+	if [ -z "$1" ]; then
+		echo "Usage: database_restore_to_test (file)"
+		return 1
+	fi
+	if [ ! -f "$1" ]; then
+		_err "$1 does not exist"
+		return 1
+	fi
+
 	_database_set_profile test
 
 	# Lets make a tmp database first just in case it goes wrong
@@ -257,7 +266,7 @@ database_restore_to_test() {
 
 	# Restore
 	_info "Restoring to tmp database"
-	pg_restore -h $DB_HOST -p $DB_PORT -U $DB_USER --dbname=$TMP_NAME $BACKUP_FILE
+	pg_restore -h $DB_HOST -p $DB_PORT -U $DB_USER --dbname=$TMP_NAME $1
 	if [ "$?" != 0 ]; then
 		_err "Failed to restore to $TMP_NAME. TEST_DB '$TEST_DB' is un-touched."
 		return
