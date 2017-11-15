@@ -45,8 +45,10 @@ See How To's below for practical things to do to get this going.
 ## How To's ##
 
 ### Installing software dependencies ###
+Review contents of install-dependencies.sh
+If you are on a debian-based system, should ble able to execute it.
 
-TODO
+
 
 ### GPG Key ###
 #### Creating a GPG2 Key ####
@@ -66,8 +68,8 @@ Passphrase: (supersecretpassword)
 %echo done
 EOF
 gpg --batch --generate-key gpg.encrypt.script
-# To list keys on the system
-gpg -k
+# List keys and signatures on the system. Grab the key and sig for the params
+gpg --list-signatures
 ```
 Change _Name-Real_, _Name-Email_, _Passphrase_ and other settings to your preference. Don't forget to make note of the Passphrase!!
 
