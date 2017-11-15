@@ -23,7 +23,7 @@ DEST_DAILY="$DEST_PREFIX-daily"
 export PASSPHRASE=$ENCRYPT_PASSWORD
 
 duplicity restore --verbosity notice \
-	--gpg-options "--batch --pinentry-mode=loopback" \
+	--gpg-options "--batch --pinentry-mode loopback" \
 	--force \
 	"$DEST_DAILY" "$RESTORE_DEFAULT_LOCATION"
 
