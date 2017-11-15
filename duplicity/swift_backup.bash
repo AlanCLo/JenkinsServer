@@ -8,12 +8,12 @@
 
 
 if [ -z "$1" ]; then
-	echo "Usage: swift_backup.sh (profile)"
+	echo "Usage: bash swift_backup.bash (profile)"
 	exit 1
 fi
 . $1
 
-. "$SCRIPT_HOME/utility.sh"
+. "$SCRIPT_HOME/utility.bash"
 if ! config_test; then
 	exit 1
 fi
