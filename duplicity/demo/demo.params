@@ -1,0 +1,33 @@
+export SCRIPT_HOME=/workspace
+
+export PRODUCTION_HOST=localhost
+export PRODUCTION_PORT=5432
+export PRODUCTION_USER=postgres
+export PRODUCTION_PASSWORD="not used in demo"
+export PRODUCTION_DB=demo_prod
+
+export TEST_HOST=localhost
+export TEST_PORT=5432
+export TEST_USER=postgres
+export TEST_PASSWORD="not used in demo"
+export TEST_DB=demo_dev
+
+export BACKUP_FILE=/workspace/backup_folder/demo_database.sqlc
+# Not using SWIFT in this demo.
+#export DEST_PREFIX="swift://(containername)"
+export DEST_PREFIX="file:///workspace/demo/backup"
+export RESTORE_DEFAULT_LOCATION=/workspace/restore_folder/demo_database.sqlc
+
+export ENCRYPT_SIG=53EC22E53738F12F
+export ENCRYPT_PASSWORD="demo"
+
+export SWIFT_USERNAME="not used in demo"
+export SWIFT_PASSWORD="not used in demo"
+export SWIFT_AUTHURL="not used in demo"
+export SWIFT_AUTHVERSION="2"
+
+export POLICY_DAYS_TO_KEEP=7
+export POLICY_WEEKS_TO_KEEP=4
+export POLICY_MONTHS_TO_KEEP=12
+export POLICY_DAY_FOR_WEEKLY=7 # Sunday
+export POLICY_DAY_FOR_MONTHY=1 # 1st day of month
