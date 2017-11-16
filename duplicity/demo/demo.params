@@ -29,6 +29,8 @@ export RESTORE_DEFAULT_LOCATION=/workspace/restore_folder/demo_database.sqlc
 export ENCRYPT_SIG=53EC22E53738F12F
 export ENCRYPT_PASSWORD="demo"
 
+# Not using SWIFT in demo
+###export SWIFT_USERNAME="tenancy:username"
 export SWIFT_USERNAME="not used in demo"
 export SWIFT_PASSWORD="not used in demo"
 export SWIFT_AUTHURL="not used in demo"
