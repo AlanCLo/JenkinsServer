@@ -305,7 +305,7 @@ database_restore_to_test() {
 config_test() {
 	is_valid=true
 	for var in "${_backup_params[@]}"; do
-		if [ -z ${!var} ]; then
+		if [ -z "${!var}" ]; then
 			_err "Missing environment variable $var"
 			is_valid=false
 		fi
