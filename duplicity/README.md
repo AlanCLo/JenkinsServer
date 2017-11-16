@@ -85,6 +85,28 @@ Install 'haveged' to remedy this.
 cat /proc/sys/kernel/random/entropy_avail
 ```
 
+#### Import/Export keys ####
+You want to make sure you have a copy of the key to restore your backup in case everything else is on fire.
+
+Based on the above example:
+
+**Exporting:**
+```bash
+gpg --export-secret-key -a "EncryptKey" > EncryptKey.pri
+
+# For containers you need loopback
+gpg --pinentry-mode loopback --export-secret-key -a "EncryptKey" > EncryptKey.pri
+```
+
+**Importing**
+```bash
+gpg --allow-secret-key-import --import EncryptKey.pri
+
+# For containers you need loopback
+gpg --pinentry-mode loopback --allow-secret-key-import --import EncryptKey.pri
+```
+
+
 ### More on Scripts and Debugging ###
 
 > I hate your scripts
