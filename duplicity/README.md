@@ -7,10 +7,11 @@ The main idea is there is that you have:
  2. For testing, another test database is needed and is always a copy of production based on the last backup.
 
 
-Example: 
+**Example**:
+
 "blahapp" is a django app, all required connection details and backup policy is stored in /workspace/blahapp.params
-Backup very night at 2:01am to SWIFT
-Get a fresh test copy of the production database every night at 2:15am
+ * Backup very night at 2:01am to SWIFT
+ * Get a fresh test copy of the production database every night at 2:15am
 ```bash
 1 2 * * * bash /workspace/swift_backup.bash /workspace/blahapp.params
 15 2 * * * bash /workspace/update_test_db_from_backup.bash /workspace/blahapp.params
@@ -26,7 +27,7 @@ Requires:
 
 Currently supports:
  * PostresSQL
- 
+
 
 ## Setup Instructions ##
 1. Clone this folder in prefered location. e.g. /workspace
@@ -47,7 +48,8 @@ Currently supports:
 ## How To's ##
 
 ### Installing software dependencies ###
-Review contents of install-dependencies.sh
+Review contents of _install-dependencies.sh_
+
 If you are on a debian-based system, should ble able to execute it.
 
 
@@ -109,7 +111,7 @@ gpg --pinentry-mode loopback --allow-secret-key-import --import EncryptKey.pri
 ```
 
 
-### More on Scripts and Debugging ###
+## More on Scripts and Debugging ##
 
 > I hate your scripts
 >> Ok.
