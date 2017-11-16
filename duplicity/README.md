@@ -128,12 +128,23 @@ You now have a number of bash functions starting with "database\_" you can tab-c
 
 List of useful functions:
 ```bash
+# Tells you which environment variable you haven't got yet if any
 config_test
+
+# List name of each database on prod server or test server
 database_list (prod|test)
+
+# Executes "SELECT 1;" on the given prod or test server and database name
 database_test_connectivity (prod|test) (db name)
+
+# Backup the named database on prod or test server to file
 database_backup (prod|test) (db name) (file)
+
+# Shortcut to run database_backup on PRODUCTION_DB as specified in environment variable
 database_backup_production
-database_restore_to_test
+
+# Create/Recreate TEST_DB from file. Only replaces database if restoration successful.
+database_restore_to_test (file)
 ```
 
 When you are getting a new setup and application going, you should be able to run each of these functions on their own. Of course you should run the swift\_backup.bash and update\_test\_db\_from_backup.bash manually before setting up cron
