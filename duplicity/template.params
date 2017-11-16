@@ -16,7 +16,6 @@ export BACKUP_FILE=
 export DEST_PREFIX="swift://(containername)/
 export RESTORE_DEFAULT_LOCATION=
 
-export ENCRYPT_KEY=
 export ENCRYPT_SIG=
 export ENCRYPT_PASSWORD=
 
