@@ -39,8 +39,10 @@ Currently supports:
    - [ ] Backup policy settings for daily, weekly and monthly rolling window backup
 4. Setup cron to run once per day at preferred time for swift_backup.bash and update_test_db_from_backup.bash as per example above
 
-**Note**: It is fine to run the scripts manually outside of cron to do a backup or restore to test.
-See How To's below for practical things to do to get this going.
+**Notes**: 
+ * It is fine to run the scripts manually outside of cron to do a backup or restore to test.
+ * If you are setting this up for the first time: create new GPG keys, otherwise import the existing key to talk to existing backups
+ * See How To's below for practical things to do to get this going.
 
 ## How To's ##
 
@@ -124,12 +126,12 @@ You now have a number of bash functions starting with "database\_" you can tab-c
 
 List of useful functions:
 ```bash
+config_test
 database_list (prod|test)
 database_test_connectivity (prod|test) (db name)
 database_backup (prod|test) (db name) (file)
 database_backup_production
 database_restore_to_test
-config_test
 ```
 
 When you are getting a new setup and application going, you should be able to run each of these functions on their own. Of course you should run the swift\_backup.bash and update\_test\_db\_from_backup.bash manually before setting up cron
