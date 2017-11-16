@@ -31,7 +31,7 @@ Currently supports:
 
 ## Setup Instructions ##
 1. Clone this folder in prefered location. e.g. /workspace
-2. Install dependencies. 
+2. Install software dependencies. (See how-to)
 3. Copy template.params and fill in the parameters
    - [ ] Production database connection details
    - [ ] Test database connection details
@@ -48,11 +48,10 @@ Currently supports:
 ## How To's ##
 
 ### Installing software dependencies ###
-Review contents of _install-dependencies.sh_
-
-If you are on a debian-based system, should ble able to execute it.
-
-
+Review contents of _install-dependencies.sh_. If you are on a debian-based system, should ble able to execute it.
+```bash
+sudo install-dependencies.sh
+```
 
 ### GPG Key ###
 #### Creating a GPG2 Key ####
@@ -166,5 +165,36 @@ database_restore_to_test (file)
 When you are getting a new setup and application going, you should be able to run each of these functions on their own. Of course you should run the swift\_backup.bash and update\_test\_db\_from_backup.bash manually before setting up cron
 
 
+## Run as container ##
+You can consider running this as a container with docker. 
 
+One use case is to avoid dependency hell for your build server where multiple projects demand different versions of PostgreSQL, pgp2, or something like that. In which case, edit the base image of the Dockerfile (currently postgres:latest) to your liking and build the image.
+
+```bash
+docker build -t dupimg .
+docker run -d -it --name mybackup dupimg
+```
+Change the image name (dupimg) and instance name (mybackup) to your liking.
+
+Use it to load the demo to see what it looks like functioning
+```bash
+# Setup the demo project, with imported demo key and runs a backup & restore
+# Note taht demo cheats and backups to filesystem instead of swift
+docker exec mybackup /workspace/demo/demo_setup.sh
+
+# Enter the instance to look at the whats going on
+docker exec -it mybackup /bin/bash
+```
+
+Consider these variants of running the image:
+```bash
+# You have a container running PostgreSQL named 'postgres' you want this to talk to
+# Use the --link flag
+docker run -d -it --name mybackup --link postgres:postgres dupimg
+
+# You have a folder on the host /backup that you want this to use as the local backup_folder before going to SWIFT
+# Use the -v flag
+docker run -d -it --name mybackup -v /backup:/workspace/backup_folder dupimg
+```
+You can use both variants of course. Consult the internet for other ways to use containers.
 
