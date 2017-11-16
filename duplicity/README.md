@@ -90,26 +90,42 @@ cat /proc/sys/kernel/random/entropy_avail
 ```
 
 #### Import/Export keys ####
-You want to make sure you have a copy of the key to restore your backup in case everything else is on fire.
+You want to make sure you have a copy of the key to restore your backup in case everything else is on fire. 
 
 Based on the above example:
 
 **Exporting:**
 ```bash
-gpg --export-secret-key -a "EncryptKey" > EncryptKey.pri
+gpg --export-secret-key -a "EncryptKey" > EncryptKey.private.key
+gpg --export-ownertrust > EncryptKey-ownertrust-gpg.txt
 
 # For containers you need loopback
 gpg --pinentry-mode loopback --export-secret-key -a "EncryptKey" > EncryptKey.pri
+gpg --export-ownertrust > EncryptKey-ownertrust-gpg.txt
 ```
 
 **Importing**
 ```bash
-gpg --allow-secret-key-import --import EncryptKey.pri
+gpg --import EncryptKey.pri
+gpg --import-ownertrust EncryptKey-ownertrust-gpg.txt
 
 # For containers you need loopback
-gpg --pinentry-mode loopback --allow-secret-key-import --import EncryptKey.pri
+gpg --pinentry-mode loopback --import EncryptKey.pri
+gpg --import-ownertrust EncryptKey-ownertrust-gpg.txt
+```
+Without the ownertrust step, keys you import aren't trusted, and by default all gpg commands will exit with error.
+
+You don't have to have the ownertrust.txt files. If you don't have it, you can still import the key and pick one of these alternatives:
+```bash
+# Alternative 1: Set trust manually
+gpg --edit-key (name of key)
+# then follow the prompts to give [ultimate] trust
+
+# Alternative 2: Script that trusts ALL known keys without trusted owner 
+gpg –list-keys –fingerprint –with-colons | sed -E -n -e ‘s/^fpr:::::::::([0-9A-F]+):$/\1:6:/p’ | gpg --import-ownertrust
 ```
 
+This is a summary based on current searches and my limited understanding. Consult the internet for the latest on gpg2 best practices.
 
 ## More on Scripts and Debugging ##
 
