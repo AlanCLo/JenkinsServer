@@ -126,6 +126,31 @@ gpg –list-keys –fingerprint –with-colons | sed -E -n -e ‘s/^fpr:::::::::
 
 This is a summary based on current searches and my limited understanding. Consult the internet for the latest on gpg2 best practices.
 
+### Logging ###
+I recommend redirecting stdout and stderr to a log file for diagnosis in the future. Use logrotate to auto maintain log file capacity. 
+
+Example:
+
+The following will run logrotate at 2:30am every night. The configuration rotates if it exceeds 100k bytes by moving the filename. It keeps a window of 10 rotations.
+
+The crontab:
+```bash
+1 2 * * * bash /workspace/swift_backup.bash /workspace/blahapp.params 2>&1 >> /workspace/logs/backup.log 
+15 2 * * * bash /workspace/update_test_db_from_backup.bash /workspace/blahapp.params 2>&1 >> /workspace/logs/update.log
+30 2 * * * logrotate /workspace/backup_logrotate.conf
+```
+
+backup\_logrotate.conf
+```
+/workspace/logs/*.log {
+	missingok
+	notifempty
+	size 100k
+	copytruncate
+	rotate 10
+}
+```
+
 ## More on Scripts and Debugging ##
 
 > I hate your scripts
