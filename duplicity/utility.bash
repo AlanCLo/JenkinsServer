@@ -120,7 +120,6 @@ _database_exists() {
 	_database_set_profile $1
 	psql -h $DB_HOST -p $DB_PORT -U $DB_USER -lqt | cut -d '|' -f 1 | grep -qw $2
 	RESULT=$?
-	_database_unset
 	return $RESULT
 }
 
@@ -143,7 +142,6 @@ _database_drop() {
 	_database_set_profile test
 	psql -h $DB_HOST -p $DB_PORT -U $DB_USER -c "DROP DATABASE $1;"
 	RESULT=$?
-	_database_unset
 	return $RESULT
 }
 
