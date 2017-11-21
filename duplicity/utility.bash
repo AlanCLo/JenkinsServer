@@ -181,7 +181,7 @@ database_test_connectivity() {
 		return
 	fi
 	_database_set_profile $1
-	psql -h $DB_HOST -p $DB_PORT -U $DB_USER -c "SELECT 1;"
+	psql -h $DB_HOST -p $DB_PORT -U $DB_USER $2 -c "SELECT 1;"
 	RESULT=$?
 	if [ "$RESULT" -eq 0 ]; then
 		_info "SUCCESS"
