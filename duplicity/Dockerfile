@@ -7,4 +7,4 @@ RUN sh install-dependencies.sh --nopsql
 
 VOLUME /workspace/backup_folder
 
-
+CMD ["cron", "-f"]
