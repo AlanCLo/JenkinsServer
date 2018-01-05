@@ -1,4 +1,4 @@
-export SCRIPT_HOME=(location of scripts)
+export SCRIPT_HOME=/backupapps/scripts
 
 export PRODUCTION_HOST=
 export PRODUCTION_PORT=5432
@@ -23,6 +23,7 @@ export SWIFT_USERNAME="(tenancy):(username)"
 export SWIFT_PASSWORD=
 export SWIFT_AUTHURL=
 export SWIFT_AUTHVERSION="2"
+
 
 export POLICY_DAYS_TO_KEEP=7
 export POLICY_WEEKS_TO_KEEP=4

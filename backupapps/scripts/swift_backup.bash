@@ -24,8 +24,8 @@ database_backup_production
 _do_upload() {
 	_info "Backup to $3"
 	duplicity full \
+		--gpg-options "${GPG_OPTS}" \
 		--verbosity notice \
-		--gpg-options "--batch --pinentry-mode loopback" \
 		--encrypt-key "$1" \
 		--num-retries 3 \
 		--asynchronous-upload \
@@ -37,8 +37,8 @@ _do_upload() {
 _do_cleanup() {
 	_info "Cleaning older than "$1$2" for $3"
 	duplicity remove-older-than "$1$2" \
+        --gpg-options "${GPG_OPTS}" \
 		--verbosity notice \
-		--gpg-options "--batch --pinentry-mode loopback" \
 		--force \
 		"$3"
 }

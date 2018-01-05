@@ -2,29 +2,27 @@
 # To give an example of what a parameters file should look like
 # Assumes demo_setup.sh has been executed to setup the databases and imported demo keys for encryption
 
-export SCRIPT_HOME=/workspace
+export SCRIPT_HOME=/backupapps/scripts
 
-# localhost for prod server
-export PRODUCTION_HOST=localhost
+export PRODUCTION_HOST=postgres
 export PRODUCTION_PORT=5432
 export PRODUCTION_USER=postgres
-export PRODUCTION_PASSWORD="not used in demo"
+export PRODUCTION_PASSWORD="admin123"
 export PRODUCTION_DB=demo_prod
 
-# localhost for test server
-export TEST_HOST=localhost
+export TEST_HOST=postgres
 export TEST_PORT=5432
 export TEST_USER=postgres
-export TEST_PASSWORD="not used in demo"
+export TEST_PASSWORD="admin123"
 export TEST_DB=demo_dev
 
-export BACKUP_FILE=/workspace/backup_folder/demo_database.sqlc
+export BACKUP_FILE=/backupapps/data/demo/demo_database.sqlc
 
 # Not using SWIFT in this demo. Just backing up to filesystem as an example.
 ###export DEST_PREFIX="swift://(containername)"
-export DEST_PREFIX="file:///workspace/demo/backup"
+export DEST_PREFIX="file:///backupapps/filesystem/demo/demo"
 
-export RESTORE_DEFAULT_LOCATION=/workspace/restore_folder/demo_database.sqlc
+export RESTORE_DEFAULT_LOCATION=/backupapps/restore/demo/demo_database.sqlc
 
 export ENCRYPT_SIG=53EC22E53738F12F
 export ENCRYPT_PASSWORD="demo"

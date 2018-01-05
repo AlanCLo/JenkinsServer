@@ -1,10 +1,15 @@
-FROM postgres
+FROM ubuntu:16.04
 
-RUN mkdir -p /workspace
-WORKDIR /workspace
-ADD . /workspace
-RUN sh install-dependencies.sh --nopsql
+RUN mkdir -p /backupapps
+ADD . /backupapps
+WORKDIR /backupapps
+RUN sh install_dependencies.sh
+# Reduce resulting image size
+#RUN rm -rf /var/lib/app/lists/*
 
-VOLUME /workspace/backup_folder
+# Assumes the volume you mount is a clone of the repo with your stuff which will override the default
+VOLUME /backupapps
 
-CMD ["cron", "-f"]
+
+#CMD "sh /backupapps/load_keys.sh" && "cron -f"
+CMD ["/bin/bash"]

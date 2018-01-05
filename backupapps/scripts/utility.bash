@@ -3,7 +3,7 @@
 # Helper and Utility functions for database backup and restoration.
 # Based on:
 #	- PostgreSQL databases
-#	- gnupg2 encryption & signing
+#	- gnupg 1 or 2 encryption & signing
 #	- Duplicity
 #	- OpenStack SWIFT
 #
@@ -333,3 +333,17 @@ config_clear() {
 
 
 
+####
+# [ALWAYS RUN] Handle GnuPG 1 and 2 differences for container by setting GPG_OPTS
+#
+# Default console entry behaviour in GPG 2 is a bit more secure but incompatible with
+# how we use it inside a container. 
+####
+is_gpg2=$(gpg --version | grep "gpg (GnuPG)" | sed 's/gpg (GnuPG) //')
+GPG_OPTS="--batch"
+if [ "${is_gpg2:0:1}" = "2" ]; then
+    # The first char is a 2 so it must be version 2
+    # Add the entry mode to loopback bit
+    GPG_OPTS="${GPG_OPTS} --batch --pinentry-mode loopback"
+fi
+export GPG_OPTS
