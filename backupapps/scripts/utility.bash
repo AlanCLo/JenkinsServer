@@ -23,9 +23,9 @@ TEST_PORT
 TEST_USER
 TEST_PASSWORD
 TEST_DB
-BACKUP_FILE
+BACKUP_TARGET
 DEST_PREFIX
-RESTORE_DEFAULT_LOCATION
+RESTORE_LOCATION
 ENCRYPT_SIG
 ENCRYPT_PASSWORD
 SWIFT_USERNAME
@@ -239,7 +239,7 @@ database_backup() {
 #    None
 #####
 database_backup_production() {
-    database_backup prod $PRODUCTION_DB $BACKUP_FILE
+    database_backup prod $PRODUCTION_DB $BACKUP_TARGET
 }
 
 #####

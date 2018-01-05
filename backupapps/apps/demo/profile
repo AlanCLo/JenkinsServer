@@ -1,4 +1,4 @@
-# demo.params
+# demo/profile
 # To give an example of what a parameters file should look like
 # Assumes demo_setup.sh has been executed to setup the databases and imported demo keys for encryption
 
@@ -14,13 +14,13 @@ export TEST_USER=postgres
 export TEST_PASSWORD="admin123"
 export TEST_DB=demo_dev
 
-export BACKUP_FILE=/backupapps/data/demo/demo_database.sqlc
+export BACKUP_TARGET=/backupapps/data/demo/demo_database.sqlc
 
 # Not using SWIFT in this demo. Just backing up to filesystem as an example.
 ###export DEST_PREFIX="swift://(containername)"
 export DEST_PREFIX="file:///backupapps/filesystem/demo/demo"
 
-export RESTORE_DEFAULT_LOCATION=/backupapps/restore/demo/demo_database.sqlc
+export RESTORE_LOCATION=/backupapps/restore/demo/demo_database.sqlc
 
 export ENCRYPT_SIG=53EC22E53738F12F
 export ENCRYPT_PASSWORD="demo"

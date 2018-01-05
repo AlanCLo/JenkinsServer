@@ -26,10 +26,10 @@ export PASSPHRASE=$ENCRYPT_PASSWORD
 duplicity restore --verbosity notice \
     --gpg-options "${GPG_OPTS}" \
     --force \
-    "$DEST_DAILY" "$RESTORE_DEFAULT_LOCATION"
+    "$DEST_DAILY" "$RESTORE_LOCATION"
 
 
-database_restore_to_test "$RESTORE_DEFAULT_LOCATION"
+database_restore_to_test "$RESTORE_LOCATION"
 
 unset PASSPHRASE
 
