@@ -68,6 +68,20 @@ _info() {
 }
 
 #####
+# Shortcut to exit a script if the previous shell command has errored and with a message to error steam
+# Arguments:
+#    Stuff you want to print
+# Return:
+#    None
+#####
+_exitIfError() {
+    if [ $? -ne 0 ]; then
+        _err $1
+        exit 1
+    fi
+}
+
+#####
 # Shortcut to switch between 2 profiles
 # Arguments:
 #    $1: either 'prod' or 'test'
@@ -347,3 +361,42 @@ if [ "${is_gpg2:0:1}" = "2" ]; then
     GPG_OPTS="${GPG_OPTS} --batch --pinentry-mode loopback"
 fi
 export GPG_OPTS
+
+
+
+#####
+# Upload a backup using duplicity
+# Arguments:
+#    $1: Encrypt key id from GPG
+#    $2: Source location to backup
+#    $3: Destination using duplicity backend notation (see duplicty --help)
+#####
+dup_upload() {
+    _info "Backup to $3"
+    duplicity full \
+        --gpg-options "${GPG_OPTS}" \
+        --verbosity notice \
+        --encrypt-key "$1" \
+        --num-retries 3 \
+        --asynchronous-upload \
+        --volsize 10 \
+        --force \
+        "$2" "$3"
+}
+
+#####
+# Enforces a rolling window backup policy on a duplicity backup store
+# Arguments:
+#    $1: Number of (time-unit) to keep in positive integer
+#    $2: Duplicity time unit such as "D", "W", "M"
+#    $3: Backup destination using duplicity backend notation (see duplicty --help)
+#####
+dup_cleanup() {
+    _info "Cleaning older than "$1$2" for $3"
+    duplicity remove-older-than "$1$2" \
+        --gpg-options "${GPG_OPTS}" \
+        --verbosity notice \
+        --force \
+        "$3"
+}
+
