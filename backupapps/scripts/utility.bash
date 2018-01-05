@@ -13,7 +13,6 @@
 
 # List of required environment variables for this utility
 _backup_params=($(cat <<EOF
-SCRIPT_HOME
 PRODUCTION_HOST
 PRODUCTION_PORT
 PRODUCTION_USER
@@ -334,7 +333,8 @@ config_clear() {
 
 
 ####
-# [ALWAYS RUN] Handle GnuPG 1 and 2 differences for container by setting GPG_OPTS
+# [ALWAYS RUN] 
+# Handle GnuPG 1 and 2 differences for container by setting GPG_OPTS
 #
 # Default console entry behaviour in GPG 2 is a bit more secure but incompatible with
 # how we use it inside a container. 

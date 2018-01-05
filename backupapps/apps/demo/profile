@@ -2,8 +2,6 @@
 # To give an example of what a parameters file should look like
 # Assumes demo_setup.sh has been executed to setup the databases and imported demo keys for encryption
 
-export SCRIPT_HOME=/backupapps/scripts
-
 export PRODUCTION_HOST=postgres
 export PRODUCTION_PORT=5432
 export PRODUCTION_USER=postgres

@@ -13,7 +13,8 @@ if [ -z "$1" ]; then
 fi
 . $1
 
-. "$SCRIPT_HOME/utility.bash"
+SCRIPT_HOME=$(dirname $(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0))
+source "$SCRIPT_HOME/utility.bash"
 if ! config_test; then
 	exit 1
 fi
