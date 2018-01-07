@@ -19,21 +19,16 @@ if ! config_test; then
     exit 1
 fi
 
-DEST_DAILY="$DEST_PREFIX-daily"
+last_backup="$DEST_PREFIX-daily"
 
 export PASSPHRASE=$ENCRYPT_PASSWORD
-
-duplicity restore --verbosity notice \
-    --gpg-options "${GPG_OPTS}" \
-    --force \
-    "$DEST_DAILY" "$RESTORE_LOCATION"
-
+dup_restore "$last_backup" "$RESTORE_LOCATION"
 
 database_restore_to_test "$RESTORE_LOCATION"
 
-unset PASSPHRASE
 
 # Clean up to avoid leaving environment variables in shell
+unset PASSPHRASE
 config_clear
 
 

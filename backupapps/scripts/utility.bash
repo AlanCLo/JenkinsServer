@@ -373,6 +373,8 @@ export GPG_OPTS
 #####
 dup_upload() {
     _info "Backup to $3"
+    # Set the PASSPHRASE variable which is the var that GnuPG expects
+    export PASSPHRASE=$ENCRYPT_PASSWORD
     duplicity full \
         --gpg-options "${GPG_OPTS}" \
         --verbosity notice \
@@ -382,6 +384,9 @@ dup_upload() {
         --volsize 10 \
         --force \
         "$2" "$3"
+    success=$?
+    unset PASSPHRASE
+    return $success
 }
 
 #####
@@ -393,10 +398,38 @@ dup_upload() {
 #####
 dup_cleanup() {
     _info "Cleaning older than "$1$2" for $3"
+    # Set the PASSPHRASE variable which is the var that GnuPG expects
+    export PASSPHRASE=$ENCRYPT_PASSWORD
     duplicity remove-older-than "$1$2" \
         --gpg-options "${GPG_OPTS}" \
         --verbosity notice \
         --force \
         "$3"
+    success=$?
+    unset PASSPHRASE
+    return $success
 }
+
+
+#####
+# Short cut for running duplicity to do a restoration
+# Arguments:
+#    $1: The backup to restore using duplicity backend notation (see duplicity --help)
+#    $2: Destination location to restore to
+#####
+dup_restore() {
+    _info "Restoring to $2"
+    # Set the PASSPHRASE variable which is the var that GnuPG expects
+    export PASSPHRASE=$ENCRYPT_PASSWORD
+    duplicity restore --verbosity notice \
+        --gpg-options "${GPG_OPTS}" \
+        --force \
+        "$1" "$2"
+    success=$?
+    unset PASSPHRASE
+    return $success
+}
+
+
+
 

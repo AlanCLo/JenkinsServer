@@ -26,9 +26,6 @@ DEST_WEEKLY="$DEST_PREFIX-weekly"
 DEST_MONTHLY="$DEST_PREFIX-monthly"
 
 
-# Set the PASSPHRASE variable which is the var that GnuPG expects
-export PASSPHRASE=$ENCRYPT_PASSWORD
-
 # === Uploads ===
 dup_upload "$ENCRYPT_SIG" "$BACKUP_TARGET" "$DEST_DAILY"
 
@@ -49,5 +46,4 @@ dup_cleanup "$POLICY_MONTHS_TO_KEEP" "M" "$DEST_MONTHLY"
 
 
 # Clean up to avoid leaving environment variables in shell
-unset PASSPHRASE
 config_clear
