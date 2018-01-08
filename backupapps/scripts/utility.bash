@@ -59,10 +59,12 @@ fi
 # Params if using a SWIFT backend for backup
 if [ "${DEST_PREFIX:0:5}" = "swift" ]; then
     _extra_params=($(cat <<EOF
-SWIFT_USERNAME
-SWIFT_PASSWORD
-SWIFT_AUTHURL
-SWIFT_AUTHVERSION
+OS_PROJECT_NAME
+OS_USERNAME
+OS_PASSWORD
+OS_AUTH_URL
+OS_USER_DOMAIN_NAME
+OS_REGION_NAME
 EOF
 ))
     _backup_params=("${_backup_params[@]}" "${_extra_params[@]}")
@@ -375,6 +377,37 @@ export GPG_OPTS
 
 
 
+
+
+#####
+# Translates Openstack environment variables into duplicity ones
+#####
+_dup_set() {
+    export SWIFT_USERNAME="${OS_PROJECT_NAME}:${OS_USERNAME}"
+    export SWIFT_PASSWORD="${OS_PASSWORD}"
+    export SWIFT_AUTHURL="${OS_AUTH_URL}"
+    export SWIFT_AUTHVERSION="3"
+    export SWIFT_USER_DOMAIN_NAME="${OS_USER_DOMAIN_NAME}"
+    export SWIFT_REGIONNAME="${OS_REGION_NAME}"
+    # Set the PASSPHRASE variable which is the var that GnuPG expects
+    export PASSPHRASE=$ENCRYPT_PASSWORD
+}
+
+#####
+# Cleanup environment variables for duplicity
+#####
+_dup_clear() {
+    unset SWIFT_USERNAME
+    unset SWIFT_PASSWORD
+    unset SWIFT_AUTHURL
+    unset SWIFT_AUTHVERSION
+    unset SWIFT_USER_DOMAIN_NAME
+    unset SWIFT_REGIONNAME
+    unset PASSPHRASE
+}
+
+
+
 #####
 # Upload a backup using duplicity
 # Arguments:
@@ -384,8 +417,7 @@ export GPG_OPTS
 #####
 dup_upload() {
     _info "Backup to $3"
-    # Set the PASSPHRASE variable which is the var that GnuPG expects
-    export PASSPHRASE=$ENCRYPT_PASSWORD
+    _dup_set
     duplicity full \
         --gpg-options "${GPG_OPTS}" \
         --verbosity notice \
@@ -396,7 +428,7 @@ dup_upload() {
         --force \
         "$2" "$3"
     success=$?
-    unset PASSPHRASE
+    _dup_clear
     return $success
 }
 
@@ -409,15 +441,14 @@ dup_upload() {
 #####
 dup_cleanup() {
     _info "Cleaning older than "$1$2" for $3"
-    # Set the PASSPHRASE variable which is the var that GnuPG expects
-    export PASSPHRASE=$ENCRYPT_PASSWORD
+    _dup_set
     duplicity remove-older-than "$1$2" \
         --gpg-options "${GPG_OPTS}" \
         --verbosity notice \
         --force \
         "$3"
     success=$?
-    unset PASSPHRASE
+    _dup_clear
     return $success
 }
 
@@ -434,14 +465,13 @@ dup_restore() {
     # Ensure parent folders exists for result
     mkdir -p "$(dirname $2)"
 
-    # Set the PASSPHRASE variable which is the var that GnuPG expects
-    export PASSPHRASE=$ENCRYPT_PASSWORD
+    _dup_set
     duplicity restore --verbosity notice \
         --gpg-options "${GPG_OPTS}" \
         --force \
         "$1" "$2"
     success=$?
-    unset PASSPHRASE
+    _dup_clear
     return $success
 }
 
