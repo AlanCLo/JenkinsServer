@@ -1,10 +1,84 @@
 # Backup #
 
-Sub-system featuring rolling-window full backup to SWIFT and supporting copy-of-prod test databases for database applications. Every application you wish to apply this to requires its own **params** file, and associated lines in crontab.
+Sub-system featuring rolling-window full backup to SWIFT and supporting "mirror prod" test databases for database applications. Built around __duplicity, cron and GPG using bash scripts__. Can be setup on a server or as docker container.
 
-The main idea is there is that you have:
- 1. A production database for your application that you wish to backup with a rolling window policy of daily, weekly and monthly backups.
- 2. For testing, another test database is needed and is always a copy of production based on the last backup.
+## Overview of contents ##
+
+| Folder | Description |
+| --- | --- |
+| apps/ | Where cron scripts will search for app profiles that specific backup for each application to backup. |
+| scripts/ | Bash scripts source code. |
+| secrets/ | Default location for where GPG keys and OpenStack RC profiles can be stored. |
+
+__Recommended Extras__
+
+| Folder | Description |
+| --- | --- |
+| data/ | Where database dumps or similar artefacts to backup can be stored for scripts to pick up. This way you have a local backup you can immediately access. |
+| filesystem/ | When you want to backup to local filesystem accessible by the server by using "file://" backend in duplicity. |
+| restore/ | Default folder to restore backups to. |
+
+If the whole __backupapps/__ is a mounted volume on your server with an appropriate device (for example VM Volume), this can make disaster recovery of your backup server simpler. 
+
+## Quick start: Using Container ##
+
+```bash
+# Assumes Docker installed.
+
+# Build 'backupapps' container
+make
+# Starts container
+make run
+```
+
+What you'll get:
+* Demo apps will be backup to local filesystem with standard policies, using demo GPG key
+* Cron schedule is setup and good to go
+* backupapps/ is a volume to the container so the contents are linked
+* Default backup policies are:
+  * Daily up to last 7 days
+  * Weekly up to last 4 weeks
+  * Monthly up to last 12 months
+
+Review the [Makefile](Makefile). Its just a series of short cuts to docker commands.
+
+NOTE: Default make parameters link to a postgres container instance named 'postgres'. If you do not have that, just set that to blank before you run. This is a good way to test that you are reading this. Refer to [../postgresql](postgresql) if you want one. 
+
+__WHAT NEXT?__
+* Get your own GPG key setup. See GPG section for more details.
+* Setup your application backup. See [How to backup an app](#how-to-backup-an-app)
+
+
+## Setup: Install on host server (not container) ##
+
+This is a Ubuntu 16.04 system.
+
+1. Checkout the backupapps/ folder from git repo to preferred location on file system. 
+2. Run install\_dependencies.sh 
+3. Setup/import GPG keys for your backup
+4. Setup crontab (set/append) with [crontab.file](crontab.file)
+
+## How to backup an app ##
+
+* Add a sub-folder under apps/
+* Cron schedule will pick up all \*.profile and \*.mirror scripts to process
+* Grab a copy of whatever you need from [apps/templates](apps/templates). You can:
+  * Backup a PostgreSQL database - [dbprofile.template](apps/templates/dbprofile.template)
+  * Backup files from a folder - [fileprofile.template](apps/templates/fileprofile.template)
+  
+You can have as many profiles for your app if you have multiple databases and/or folders you need to backup. __Give each a different DEST\_PREFIX__.
+
+
+
+
+
+
+4. How to template
+5. How to GPG
+6. Debug and extensions
+
+
+
 
 
 **Example**:
