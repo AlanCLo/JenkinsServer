@@ -1,8 +1,11 @@
 #!/bin/bash
+# testdb.mirror
+#
+# A demo mirror file that instructs the system to restore the last backup to a specified test database
 
-
+# Source the parameters from the backup profile (relative directory to this file)
 PROFILE_HOME=$(dirname $(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0))
-source "$PROFILE_HOME/profile"
+source "$PROFILE_HOME/db.profile"
 
 export TEST_HOST=postgres
 export TEST_PORT=5432

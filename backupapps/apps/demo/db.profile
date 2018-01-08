@@ -1,5 +1,7 @@
-# demo/profile
-# To give an example of what a parameters file should look like
+#/bin/bash
+# db.profile
+#
+# A demo profile for a example application that has a PostgreSQL database.
 # Assumes demo_setup.sh has been executed to setup the databases and imported demo keys for encryption
 
 export BACKUP_POSTGRESQL="1"
