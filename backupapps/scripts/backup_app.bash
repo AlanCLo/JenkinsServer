@@ -19,7 +19,10 @@ if ! config_test; then
     exit 1
 fi
 
-database_backup_production
+if [ "$BACKUP_POSTGRESQL" = "1" ]; then
+    database_backup prod "$PRODUCTION_DB" "$BACKUP_TARGET"
+    _exitIfError "Failed to backup production database"
+fi
 
 DEST_DAILY="$DEST_PREFIX-daily"
 DEST_WEEKLY="$DEST_PREFIX-weekly"
@@ -47,3 +50,8 @@ dup_cleanup "$POLICY_MONTHS_TO_KEEP" "M" "$DEST_MONTHLY"
 
 # Clean up to avoid leaving environment variables in shell
 config_clear
+
+_info "SUCCESSFULLY COMPLETED"
+
+
+

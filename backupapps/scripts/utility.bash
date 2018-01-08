@@ -250,25 +250,16 @@ database_backup() {
     fi
     _database_set_profile $1
     pg_dump -h $DB_HOST -p $DB_PORT -U $DB_USER --format=c --file="$3" $2
-    if [ "$?" -eq 0 ]; then
+    success="$?"
+    if [ "$success" -eq 0 ]; then
         _info "SUCCESS. Backup to '$3': complete"
     else
         _err "database_backup failed to complete"
     fi
     _database_unset
+    return $success
 }
 
-
-#####
-# Backup the production database to file
-# Arguments:
-#    None
-# Return:
-#    None
-#####
-database_backup_production() {
-    database_backup prod $PRODUCTION_DB $BACKUP_TARGET
-}
 
 #####
 # Restore database to TEST_DB
@@ -296,39 +287,28 @@ database_restore_to_test() {
     fi
     _info "Creating tmp database for restoration"
     createdb -h $DB_HOST -p $DB_PORT -U $DB_USER -T template0 $TMP_NAME
-    if [ "$?" != 0 ]; then
-        _err "Failed to create tmp database '$TMP_NAME'."
-        return
-    fi
+    _exitIfError "Failed to create tmp database '$TMP_NAME'."
     _info "Createdb successful"
 
     # Restore
     _info "Restoring to tmp database"
     pg_restore -h $DB_HOST -p $DB_PORT -U $DB_USER --dbname=$TMP_NAME $1
-    if [ "$?" != 0 ]; then
-        _err "Failed to restore to $TMP_NAME. TEST_DB '$TEST_DB' is un-touched."
-        return
-    fi
+    _exitIfError "Failed to restore to $TMP_NAME. TEST_DB '$TEST_DB' is un-touched."
     _info "Restore to tmp database succesful"
 
     # Remove previous TEST_DB
     if _database_exists test "$TEST_DB"; then
         _info "Attempting to drop old test database"
-        if ! _database_drop "$TEST_DB"; then
-            _err "Failed to drop the previous TEST_DB '$TEST_DB'. Aborting"
-            return
-        fi
+        _database_drop "$TEST_DB"
+        _exitIfError "Failed to drop the previous TEST_DB '$TEST_DB'. Aborting"
     else
         _info "There is no previous instance of TEST_DB '$TEST_DB'. This is will be the first!"
     fi
 
     _info "Renaming tmp database to TEST_DB '$TEST_DB'"
     psql -h $DB_HOST -p $DB_PORT -U $DB_USER -c "ALTER DATABASE $TMP_NAME RENAME TO $TEST_DB"
-    if [ "$?" -eq 0 ]; then
-        _info "SUCCESS. TEST_DB '$TEST_DB' has been restored"
-    else
-        _err "Failed to rename database. TEST_DB '$TEST_DB' is un-touched."
-    fi
+    _exitIfError "Failed to rename database. TEST_DB '$TEST_DB' is un-touched."
+    _info "SUCCESS. TEST_DB '$TEST_DB' has been restored"
 
     _database_unset
 }
