@@ -27,7 +27,7 @@ EOF
 ))
 
 # =====
-# Extra options
+# Optional modes that require more environment variables
 # =====
 
 # Params for backing up PostgreSQL database

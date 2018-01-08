@@ -11,10 +11,13 @@ if [ -z "$1" ]; then
     echo "Usage: bash backup_app.bash (profile)"
     exit 1
 fi
-source $1
+source "$1"
 
+# Safe import of utility module
 SCRIPT_HOME=$(dirname $(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0))
 source "$SCRIPT_HOME/utility.bash"
+
+# Check for required parameters in environment
 if ! config_test; then
     exit 1
 fi
@@ -51,6 +54,7 @@ dup_cleanup "$POLICY_MONTHS_TO_KEEP" "M" "$DEST_MONTHLY"
 # Clean up to avoid leaving environment variables in shell
 config_clear
 
+# We're done!
 _info "SUCCESSFULLY COMPLETED"
 
 
