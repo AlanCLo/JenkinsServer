@@ -248,6 +248,9 @@ database_backup() {
         echo "Usage: database_backup (prod|test) (db name) (file)"
         return
     fi
+    # Ensure parent folders exists for database dump
+    mkdir -p "$(dirname $3)"
+
     _database_set_profile $1
     pg_dump -h $DB_HOST -p $DB_PORT -U $DB_USER --format=c --file="$3" $2
     success="$?"
@@ -427,6 +430,10 @@ dup_cleanup() {
 #####
 dup_restore() {
     _info "Restoring to $2"
+
+    # Ensure parent folders exists for result
+    mkdir -p "$(dirname $2)"
+
     # Set the PASSPHRASE variable which is the var that GnuPG expects
     export PASSPHRASE=$ENCRYPT_PASSWORD
     duplicity restore --verbosity notice \

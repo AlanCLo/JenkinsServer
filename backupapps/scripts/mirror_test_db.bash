@@ -28,6 +28,7 @@ _exitIfError "Failed to restore last backup at $last_backup"
 
 # Restore database
 database_restore_to_test "$RESTORE_LOCATION"
+_exitIfError "Failed to restore database from file"
 
 
 # Clean up to avoid leaving environment variables in shell

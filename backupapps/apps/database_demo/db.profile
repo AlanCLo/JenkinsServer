@@ -11,9 +11,9 @@ export PRODUCTION_USER=postgres
 export PRODUCTION_PASSWORD="admin123"
 export PRODUCTION_DB=demo_prod
 
-export BACKUP_TARGET="/backupapps/data/demo/demo_database.sqlc"
-export DEST_PREFIX="file:///backupapps/filesystem/demo/demo"
-export RESTORE_LOCATION="/backupapps/restore/demo/demo_database.sqlc"
+export BACKUP_TARGET="/backupapps/data/database_demo/demo_database.sqlc"
+export DEST_PREFIX="file:///backupapps/filesystem/database_demo/database_demo"
+export RESTORE_LOCATION="/backupapps/restore/database_demo/demo_database.sqlc"
 
 export ENCRYPT_SIG=53EC22E53738F12F
 export ENCRYPT_PASSWORD="demo"
