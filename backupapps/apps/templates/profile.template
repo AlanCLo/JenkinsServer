@@ -30,7 +30,7 @@ export RESTORE_LOCATION=/backupapps/restore/blahapp/blahapp_database.sqlc
 
 # GPG encryption
 
-# ID for GPG key. Use gpg -k to look it up. See README.md for more info
+# ID for GPG key. Use gpg -K to look it up. See README.md for more info
 export ENCRYPT_SIG=(GPG key ID)
 
 # Password for GPG key
