@@ -21,14 +21,12 @@ fi
 
 last_backup="$DEST_PREFIX-daily"
 
-export PASSPHRASE=$ENCRYPT_PASSWORD
 dup_restore "$last_backup" "$RESTORE_LOCATION"
 
 database_restore_to_test "$RESTORE_LOCATION"
 
 
 # Clean up to avoid leaving environment variables in shell
-unset PASSPHRASE
 config_clear
 
 

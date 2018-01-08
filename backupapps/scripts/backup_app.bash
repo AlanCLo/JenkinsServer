@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup script designed for cron to backup postgresql databases
+# Backup script designed for cron to backup application files and databases
 #
 # Arguments:
 #    $1: Name of profile to source for parameters
@@ -8,7 +8,7 @@
 
 
 if [ -z "$1" ]; then
-    echo "Usage: bash swift_backup.bash (profile)"
+    echo "Usage: bash backup_app.bash (profile)"
     exit 1
 fi
 source $1

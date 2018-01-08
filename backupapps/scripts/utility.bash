@@ -13,25 +13,11 @@
 
 # List of required environment variables for this utility
 _backup_params=($(cat <<EOF
-PRODUCTION_HOST
-PRODUCTION_PORT
-PRODUCTION_USER
-PRODUCTION_PASSWORD
-PRODUCTION_DB
-TEST_HOST
-TEST_PORT
-TEST_USER
-TEST_PASSWORD
-TEST_DB
 BACKUP_TARGET
 DEST_PREFIX
 RESTORE_LOCATION
 ENCRYPT_SIG
 ENCRYPT_PASSWORD
-SWIFT_USERNAME
-SWIFT_PASSWORD
-SWIFT_AUTHURL
-SWIFT_AUTHVERSION
 POLICY_DAYS_TO_KEEP
 POLICY_WEEKS_TO_KEEP
 POLICY_MONTHS_TO_KEEP
@@ -39,6 +25,48 @@ POLICY_DAY_FOR_WEEKLY
 POLICY_DAY_FOR_MONTHY
 EOF
 ))
+
+# =====
+# Extra options
+# =====
+
+# Params for backing up PostgreSQL database
+if [ "$BACKUP_POSTGRESQL" = "1" ]; then
+    _extra_params=($(cat <<EOF
+PRODUCTION_HOST
+PRODUCTION_PORT
+PRODUCTION_USER
+PRODUCTION_PASSWORD
+PRODUCTION_DB
+EOF
+))
+    _backup_params=("${_backup_params[@]}" "${_extra_params[@]}")
+fi
+
+# Params for mirroring PostgreSQL database to test instance
+if [ "$MIRROR_POSTGRESQL" = "1" ]; then
+    _extra_params=($(cat <<EOF
+TEST_HOST
+TEST_PORT
+TEST_USER
+TEST_PASSWORD
+TEST_DB
+EOF
+))
+    _backup_params=("${_backup_params[@]}" "${_extra_params[@]}")
+fi
+
+# Params if using a SWIFT backend for backup
+if [ "${DEST_PREFIX:0:5}" = "swift" ]; then
+    _extra_params=($(cat <<EOF
+SWIFT_USERNAME
+SWIFT_PASSWORD
+SWIFT_AUTHURL
+SWIFT_AUTHVERSION
+EOF
+))
+    _backup_params=("${_backup_params[@]}" "${_extra_params[@]}")
+fi
 
 
 # =====
