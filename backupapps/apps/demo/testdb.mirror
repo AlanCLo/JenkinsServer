@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+PROFILE_HOME=$(dirname $(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0))
+source "$PROFILE_HOME/profile"
+
+export TEST_HOST=postgres
+export TEST_PORT=5432
+export TEST_USER=postgres
+export TEST_PASSWORD="admin123"
+export TEST_DB=demo_dev
