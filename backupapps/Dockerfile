@@ -11,5 +11,4 @@ RUN sh install_dependencies.sh
 VOLUME /backupapps
 
 
-#CMD "sh /backupapps/load_keys.sh" && "cron -f"
-CMD ["/bin/bash"]
+CMD ["/bin/bash", "/backupapps/entry_point.sh"]

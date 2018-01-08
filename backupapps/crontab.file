@@ -1,0 +1,2 @@
+1 1 * * * bash /backupapps/scripts/cron_backups.bash 2>&1 >> /var/log/backupapps_backups.log
+1 3 * * * bash /backupapps/scripts/cron_mirrors.bash 2>&1 >> /var/log/backupapps_mirrors.log

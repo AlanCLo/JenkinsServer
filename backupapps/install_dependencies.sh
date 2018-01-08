@@ -7,7 +7,7 @@ set -x
 
 # Core
 apt-get update
-apt-get install -y --no-install-recommends gcc python-dev python-pip gnupg2 duplicity
+apt-get install -y --no-install-recommends gcc python-dev python-pip gnupg2 duplicity cron
 pip install --upgrade --force pip
 pip install setuptools 
 pip install python-swiftclient 
