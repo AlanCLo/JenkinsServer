@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# Instructions
+# Copy this profile.template file into its own app folder with the extension .profile in the apps/ folder
+#   E.g. /apps/myapp/db.profile 
+# This will be picked up automatically by the cron job to process
+
+
+# Enable backup of production PostgreSQL database
+export BACKUP_POSTGRESQL="1"
+
+# DB connection details if backing up database
+export PRODUCTION_HOST=(ip address or name)
+export PRODUCTION_PORT=5432
+export PRODUCTION_USER=(username)
+export PRODUCTION_PASSWORD=(password)
+export PRODUCTION_DB=(database name)
+
+
+# Fullpath to where database dump to write to, or a whole folder if thats what you are backing up
+export BACKUP_TARGET=/backupapps/data/myapp/myapp_database.sqlc
+
+# Prefix naming of where you want to store on SWIFT. Look up duplicity --help if you want different backends
+export DEST_PREFIX="swift://mybackup"
+
+# Fullpath to where database dump will be restored before DB restoration is made
+# If backing up whole folder, just name a folder
+export RESTORE_LOCATION=/backupapps/restore/myapp/myapp_database.sqlc
+
+
+# GPG encryption
+
+# ID for GPG key. Use gpg -K to look it up. See README.md for more info
+export ENCRYPT_SIG=(GPG key ID)
+
+# Password for GPG key
+export ENCRYPT_PASSWORD=(password for encryption key)
+
+
+
+# If using SWIFT backend, source the openstack profile
+source "/backupapps/secrets/(openstack rc profile).sh"
+
+
+# Review the backup rolling window policies
+export POLICY_DAYS_TO_KEEP=7
+export POLICY_WEEKS_TO_KEEP=4
+export POLICY_MONTHS_TO_KEEP=12
+export POLICY_DAY_FOR_WEEKLY=7 # Sunday
+export POLICY_DAY_FOR_MONTHY=1 # 1st day of month

@@ -1,0 +1,24 @@
+#!/bin/bash
+# 
+# Instructions
+# Copy this mirror.template file into its own app folder with the extension .mirror in the apps/ folder
+#   E.g. /apps/myapp/testdb.mirror
+# This will be picked up automatically by the cron job to process
+
+
+# Source the parameters from the backup profile (relative directory to this file)
+PROFILE_HOME=$(dirname $(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0))
+
+# Change this to the name of your profile in the same directory
+source "$PROFILE_HOME/db.profile"
+
+
+# PostgreSQL DB connection details
+# User will need to have drop database and create database privilages
+# WARNING: TEST_DB will be dropped during the mirror process!! Make sure this is not accidentally pointing to a prod DB
+export TEST_HOST=(ip address or name)
+export TEST_PORT=5432
+export TEST_USER=(username)
+export TEST_PASSWORD=(password)
+export TEST_DB=(test database name)
+
