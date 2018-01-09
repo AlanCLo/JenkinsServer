@@ -416,6 +416,11 @@ _dup_clear() {
 #    $3: Destination using duplicity backend notation (see duplicty --help)
 #####
 dup_upload() {
+    if [ -z "$3" ]; then
+        echo "Usage: dup_upload (encrypt key id) (src) (dest)"
+        echo "   e.g. dup_upload ABC123 '/path/to/backup' 'swift://myapp-daily'"
+        return 1
+    fi
     _info "Backup to $3"
     _dup_set
     duplicity full \
@@ -440,6 +445,11 @@ dup_upload() {
 #    $3: Backup destination using duplicity backend notation (see duplicty --help)
 #####
 dup_cleanup() {
+    if [ -z "$3" ]; then
+        echo "Usage: dup_cleanup (number)(unit) (backend)"
+        echo "   e.g. dup_cleanup 7D 'swift://myapp-daily'"
+        return 1
+    fi
     _info "Cleaning older than "$1$2" for $3"
     _dup_set
     duplicity remove-older-than "$1$2" \
@@ -460,6 +470,11 @@ dup_cleanup() {
 #    $2: Destination location to restore to
 #####
 dup_restore() {
+    if [ -z "$2" ]; then
+        echo "Usage: dup_restore (backend) (restore dest)"
+        echo "   e.g. dup_restore 'swift://myapp-daily' '/path/to/restore/'"
+        return 1
+    fi
     _info "Restoring to $2"
 
     # Ensure parent folders exists for result

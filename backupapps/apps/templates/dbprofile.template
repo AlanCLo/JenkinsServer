@@ -2,7 +2,7 @@
 #
 # Instructions
 # Copy this profile.template file into its own app folder with the extension .profile in the apps/ folder
-#   E.g. /apps/myapp/db.profile or /apps/myapp/app.profile
+#   E.g. /apps/myapp/db.profile 
 # This will be picked up automatically by the cron job to process
 
 
@@ -18,14 +18,14 @@ export PRODUCTION_DB=(database name)
 
 
 # Fullpath to where database dump to write to, or a whole folder if thats what you are backing up
-export BACKUP_TARGET=/backupapps/data/blahapp/blahapp_database.sqlc
+export BACKUP_TARGET=/backupapps/data/myapp/myapp_database.sqlc
 
 # Prefix naming of where you want to store on SWIFT. Look up duplicity --help if you want different backends
 export DEST_PREFIX="swift://mybackup"
 
 # Fullpath to where database dump will be restored before DB restoration is made
 # If backing up whole folder, just name a folder
-export RESTORE_LOCATION=/backupapps/restore/blahapp/blahapp_database.sqlc
+export RESTORE_LOCATION=/backupapps/restore/myapp/myapp_database.sqlc
 
 
 # GPG encryption

@@ -8,7 +8,7 @@ RESTART=--restart unless-stopped
 DOCKER_ARGS= 
 
 
-.PHONY: run stop rm clean
+.PHONY: run enter start stop rm clean
 
 
 # Builds image
@@ -21,6 +21,9 @@ run:
 
 enter:
 	docker exec -it ${NAME} /bin/bash
+
+start:
+	docker start ${NAME}
 
 stop:
 	docker stop ${NAME} 2> /dev/null || true
