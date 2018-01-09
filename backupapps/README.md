@@ -94,7 +94,7 @@ Passphrase: demo
 %echo done
 $ cp DemoEncryptKey.gpg.script mykey.gpg.script
 $ vim mykey.gpg.script
-$ ## Update parameters to your liking, especially Passphrase
+### Update parameters to your liking, especially Passphrase
 $ gpg --batch --generate-key gpg.encrypt.script
 # List keys and signatures on the system. Grab the key and sig for the params
 $ gpg --list-signatures
