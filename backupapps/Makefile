@@ -15,7 +15,6 @@ DOCKER_ARGS=
 build: Dockerfile install_dependencies.sh
 	docker build -t ${IMAGE} .
 
-# Run with docker
 run: 
 	docker run -d -it --name ${NAME} ${VOLUMES} ${LINKS} ${RESTART} ${DOCKER_ARGS} ${IMAGE}
 
@@ -35,4 +34,4 @@ clean: rm
 	docker rmi -f ${IMAGE} 2> /dev/null || true
 
 
-defualt: build
+default: build
