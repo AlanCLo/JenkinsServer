@@ -58,6 +58,10 @@ This is a Ubuntu 16.04 system.
 3. Setup/import GPG keys for your backup
 4. Setup crontab by adding contents of [crontab.file](crontab.file)
 
+> __So why would you use a container?__
+>> To get out of dependency hell. By modifying Dockerfile, you can build and run as many container instances with different distros/versions, versions of PostgreSQL, or add other apps. This way your main host server can stay the same whilst supporting a number of apps that may use different versions of stuff.
+
+
 ## How to backup an app ##
 
 * Add a sub-folder under apps/
