@@ -65,7 +65,7 @@ This is a Ubuntu 16.04 system.
 ## How to backup an app ##
 
 * Add a sub-folder under apps/
-* Cron schedule will pick up all \*.profile and \*.mirror scripts to process
+* Cron schedule will pick up all \*.profile scripts to process
 * Grab a copy of whatever you need from [apps/templates](apps/templates). You can:
   * Backup a PostgreSQL database - [dbprofile.template](apps/templates/dbprofile.template)
   * Backup files from a folder - [fileprofile.template](apps/templates/fileprofile.template)
@@ -73,6 +73,23 @@ This is a Ubuntu 16.04 system.
 You can have as many profiles for your app if you have multiple databases and/or folders you need to backup. __Give each a different DEST\_PREFIX__.
 
 Check out what is going on in [apps/database_demo](apps/database_demo) and [apps/files_demo](apps/files_demo) for a concrete example.
+
+## How to a mirror test db ##
+
+This is a pattern where a test db instance will mirror a production database through restoring the last daily backup.
+
+* Setup a backup as above. The mirror parameters will refer to the backup parameters to avoid duplication
+* Grab a copy of [apps/templates/mirror.template] and add it to your app folder
+* Change details of the test database connection details
+* Like backup profiles, all .mirror scripts are in the apps/ folder are picked up by the cron job
+
+You can have as many .mirror files as you like.
+
+The behaviour of the mirror process is as follows:
+* Restore last database dump from the -daily backup
+* Create a database from this dump with a temporary name
+* Provided all of the above is successful, only then __DROP__ the current test database, and then rename the temporary database to the name of the test database to replace it.
+
 
 ## How to GPG ##
 
