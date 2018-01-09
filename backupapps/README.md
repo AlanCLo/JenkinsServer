@@ -45,7 +45,7 @@ Review the [Makefile](Makefile). Its just a series of short cuts to docker comma
 NOTE: Default make parameters link to a postgres container instance named 'postgres'. If you do not have that, just set that to blank before you run. This is a good way to test that you are reading this. Refer to [../postgresql](postgresql) if you want one. 
 
 __WHAT NEXT?__
-* Get your own GPG key setup. See GPG section for more details.
+* Get your own GPG key setup. See [GPG](#how-to-gpg) section for more details.
 * Setup your application backup. See [How to backup an app](#how-to-backup-an-app)
 
 
@@ -54,9 +54,9 @@ __WHAT NEXT?__
 This is a Ubuntu 16.04 system.
 
 1. Checkout the backupapps/ folder from git repo to preferred location on file system. 
-2. Run install\_dependencies.sh 
+2. Run sudo install\_dependencies.sh 
 3. Setup/import GPG keys for your backup
-4. Setup crontab (set/append) with [crontab.file](crontab.file)
+4. Setup crontab by adding contents of [crontab.file](crontab.file)
 
 ## How to backup an app ##
 
@@ -68,89 +68,39 @@ This is a Ubuntu 16.04 system.
   
 You can have as many profiles for your app if you have multiple databases and/or folders you need to backup. __Give each a different DEST\_PREFIX__.
 
+Check out what is going on in [apps/database_demo](apps/database_demo) and [apps/files_demo](apps/files_demo) for a concrete example.
 
+## How to GPG ##
 
+### Creating a new GPG Key ###
 
-
-
-4. How to template
-5. How to GPG
-6. Debug and extensions
-
-
-
-
-
-**Example**:
-
-"blahapp" is a django app, all required connection details and backup policy is stored in /workspace/blahapp.params
- * Backup very night at 2:01am to SWIFT
- * Get a fresh test copy of the production database every night at 2:15am
+If you are using the container, jump in the container so that you have gpg
 ```bash
-1 2 * * * bash /workspace/swift_backup.bash /workspace/blahapp.params
-15 2 * * * bash /workspace/update_test_db_from_backup.bash /workspace/blahapp.params
-```
-Repeat for each other application you wish to apply to.
-
-Requires:
- * Bash script
- * Cron
- * Duplicity
- * GPG2
- * OpenStack SWIFT
-
-Currently supports:
- * PostresSQL
-
-
-## Setup Instructions ##
-1. Clone this folder in prefered location. e.g. /workspace
-2. Install software dependencies. (See how-to)
-3. Copy template.params and fill in the parameters
-   - [ ] Production database connection details
-   - [ ] Test database connection details
-   - [ ] GPG encryption key
-   - [ ] Openstack SWIFT tenancy details
-   - [ ] Backup policy settings for daily, weekly and monthly rolling window backup
-4. Setup cron to run once per day at preferred time for swift_backup.bash and update_test_db_from_backup.bash as per example above
-
-**Notes**: 
- * It is fine to run the scripts manually outside of cron to do a backup or restore to test.
- * If you are setting this up for the first time: create new GPG keys, otherwise import the existing key to talk to existing backups
- * See How To's below for practical things to do to get this going.
-
-## How To's ##
-
-### Installing software dependencies ###
-Review contents of _install-dependencies.sh_. If you are on a debian-based system, should ble able to execute it.
-```bash
-sudo install-dependencies.sh
+make enter
 ```
 
-### GPG Key ###
-#### Creating a GPG2 Key ####
-Consult the internet.
-
-But here is an example:
+Check out the contents of [secrets/DemoEncryptKey.gpg.script](secrets/DemoEncryptKey.gpg.script) as reference to making your own. You can do something like this:
 ```bash
-cat > gpg.encrypt.script <<EOF
+$ cd secrets/
+$ cat DemoEncryptKey.gpg.script
 Key-Type: RSA
 Key-Length: 2048
-Name-Real: EncryptKey
-Name-Comment: For encrypting data in swift
+Name-Real: DemoEncryptKey
+Name-Comment: Do not use for real situations
 Name-Email: email@email.com
 Expire-Date: 0
-Passphrase: (supersecretpassword)
+Passphrase: demo
 %commit
 %echo done
-EOF
-gpg --batch --generate-key gpg.encrypt.script
+$ cp DemoEncryptKey.gpg.script mykey.gpg.script
+$ vim mykey.gpg.script
+$ ## Update parameters to your liking, especially Passphrase
+$ gpg --batch --generate-key gpg.encrypt.script
 # List keys and signatures on the system. Grab the key and sig for the params
-gpg --list-signatures
+$ gpg --list-signatures
 ```
-Change _Name-Real_, _Name-Email_, _Passphrase_ and other settings to your preference. Don't forget to make note of the Passphrase!!
 
-#### Not enough entropy, this is a VM ####
+#### Not enough entropy, this is a VM/container ####
 VMs have trouble getting enough entropy for generating these secure keys due to lack of real devices the kernel can read from to get random values.
 
 Install 'haveged' to remedy this.
@@ -162,7 +112,7 @@ Install 'haveged' to remedy this.
 cat /proc/sys/kernel/random/entropy_avail
 ```
 
-#### Import/Export keys ####
+### Import/Export keys ###
 You want to make sure you have a copy of the key to restore your backup in case everything else is on fire. 
 
 Based on the above example:
@@ -172,7 +122,7 @@ Based on the above example:
 gpg --export-secret-key -a "EncryptKey" > EncryptKey.private.key
 gpg --export-ownertrust > EncryptKey-ownertrust-gpg.txt
 
-# For containers you need loopback
+# For containers and GPG2 you need loopback
 gpg --pinentry-mode loopback --export-secret-key -a "EncryptKey" > EncryptKey.pri
 gpg --export-ownertrust > EncryptKey-ownertrust-gpg.txt
 ```
@@ -182,7 +132,7 @@ gpg --export-ownertrust > EncryptKey-ownertrust-gpg.txt
 gpg --import EncryptKey.pri
 gpg --import-ownertrust EncryptKey-ownertrust-gpg.txt
 
-# For containers you need loopback
+# For containers and GPG2 you need loopback
 gpg --pinentry-mode loopback --import EncryptKey.pri
 gpg --import-ownertrust EncryptKey-ownertrust-gpg.txt
 ```
@@ -198,32 +148,8 @@ gpg --edit-key (name of key)
 gpg –list-keys –fingerprint –with-colons | sed -E -n -e ‘s/^fpr:::::::::([0-9A-F]+):$/\1:6:/p’ | gpg --import-ownertrust
 ```
 
-This is a summary based on current searches and my limited understanding. Consult the internet for the latest on gpg2 best practices.
+This is a summary based on current searches and my limited understanding. Consult the internet for the latest on GPG2 best practices.
 
-### Logging ###
-I recommend redirecting stdout and stderr to a log file for diagnosis in the future. Use logrotate to auto maintain log file capacity. 
-
-Example:
-
-The following will run logrotate at 2:30am every night. The configuration rotates if it exceeds 100k bytes by moving the filename. It keeps a window of 10 rotations.
-
-The crontab:
-```bash
-1 2 * * * bash /workspace/swift_backup.bash /workspace/blahapp.params 2>&1 >> /workspace/logs/backup.log 
-15 2 * * * bash /workspace/update_test_db_from_backup.bash /workspace/blahapp.params 2>&1 >> /workspace/logs/update.log
-30 2 * * * logrotate /workspace/backup_logrotate.conf
-```
-
-backup\_logrotate.conf
-```
-/workspace/logs/*.log {
-	missingok
-	notifempty
-	size 100k
-	copytruncate
-	rotate 10
-}
-```
 
 ## More on Scripts and Debugging ##
 
