@@ -3,6 +3,9 @@
 # Runs backup on each app defined by a .profile in the apps folder
 #
 
-for app in $(find apps/ -name "*.profile"); do 
-    scripts/backup_app.bash $app
+SCRIPT_HOME=$(dirname $(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0))
+APPS=$SCRIPT_HOME/../apps
+
+for app in $(find "$APPS" -name "*.profile"); do 
+    $SCRIPT_HOME/backup_app.bash $app
 done
