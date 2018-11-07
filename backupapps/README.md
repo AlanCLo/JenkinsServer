@@ -1,3 +1,11 @@
+```
+   ### NEEDS REFACTORING ###
+   Needs to run cron outside container (if running container). duh.
+   ### END NOTE ###
+```
+
+
+
 # Backup #
 
 Sub-system featuring rolling-window full backup to SWIFT and supporting "mirror prod" test databases for database applications. Built around __duplicity, cron and GPG using bash scripts__. Can be setup on a server or as docker container.
